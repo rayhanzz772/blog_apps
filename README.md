@@ -1,4 +1,4 @@
-# 📝 Blog Management RESTful API
+# 📝 Blog Management RESTful API - Made With Love ❤
 
 Sebuah RESTful API untuk sistem manajemen blog yang mendukung fitur autentikasi, CRUD post, kategori, tag, serta tracking aktivitas pengunjung dan logging admin.
 
@@ -68,4 +68,3 @@ npm install
 npm run dev
 ```
 ---
-## Made With Love ❤
