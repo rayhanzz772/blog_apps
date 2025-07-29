@@ -1,59 +1,68 @@
-Deskripsi Tugas Backend Developer - Blog Management API
-🎯 Tujuan 
-Membangun RESTful API untuk sistem Blog Management berdasarkan skema database yang ada, dengan dua peran utama:
-1.	Admin/User: dapat melakukan operasi CRUD pada konten blog (posts, tags, categories).
-2.	Customer/Publik: hanya bisa melakukan READ (list dan detail view).
-🧩 Modul/Fitur yang Harus Dibuat
-1. Authentication & Authorization
-•	Endpoint login dan logout.
-•	Middleware/guard untuk membedakan antara Admin dan Customer berdasarkan JWT atau token otorisasi lainnya.
-•	Pengamanan endpoint CRUD hanya untuk Admin.
-2. Blog Post Management Untuk Admin:
-•	POST /posts – Create blog post.
-•	PUT /posts/:id – Update blog post.
-•	DELETE /posts/:id – Soft delete post.
-•	GET /posts/admin – List all (termasuk draft dan yang dihapus).
-Untuk Customer:
-•	GET /posts – List posts (hanya publish dan belum dihapus).
-•	GET /posts/:slug 
-•	Detail post berdasarkan slug.
+# 📝 Blog Management RESTful API
 
-3. Category Management Untuk Admin:
-•	POST /categories – Tambah kategori.
-•	PUT /categories/:id – Update kategori.
-•	DELETE /categories/:id – Soft delete kategori.
-•	GET /categories/admin – List semua kategori.
-Untuk Customer:
-•	GET /categories – List kategori aktif.
-4. Tag Management Untuk Admin:
-•	POST /tags – Tambah tag.
-•	PUT /tags/:id – Update tag.
-•	DELETE /tags/:id – Soft delete tag.
-•	GET /tags/admin – List semua tag.Untuk Customer:
-•	GET /tags – List tag aktif.
-5. Post Tags (Relasi Post dan Tag)
-•	input tag list saat create/update 
-•	gunakan table post_tag sebagai pivot
-6. Post Activities (Tracking Pengunjung Post)
-•	POST /post-activities – Catat data userAgent + timestamp saat ada yang mengunjungi post (hanya untuk Customer).
-•	Opsional: GET /post-activities/:post_id (untuk admin melihat statistik).
-7. Log Activities (Admin Actions Logger)
-Buat service logging internal:  
-- Setiap aksi Create, Update, Delete oleh admin akan otomatis mencatat:
-•	user_id
-•	action
-•	entity 
-•	entity_id
-•	status
-•	IP Address
-•	userAgent 
-•	dll
-Tidak perlu expose via endpoint (opsional untuk dashboard admin nantinya).
-⚙️ Teknis Tambahan 
-1.	Gunakan soft delete (deleted_at IS NULL) untuk filter default.
-2.	Validasi slug harus unik (baik di post, tag, maupun category).
-3.	Gunakan pagination dan filter pada list endpoint.
-4.	Gunakan UUID (jika relevan) atau ID konvensional sesuai struktur DB.
-5.	Gunakan status publish dan draft untuk filtering di post public.
+Sebuah RESTful API untuk sistem manajemen blog yang mendukung fitur autentikasi, CRUD post, kategori, tag, serta tracking aktivitas pengunjung dan logging admin secara lengkap.
 
+## 🚀 Fitur Utama
 
+### 1. Autentikasi & Otorisasi
+- Login & Logout dengan JWT
+- Middleware role-based (Admin vs Customer)
+- Proteksi endpoint CRUD hanya untuk Admin
+
+### 2. Manajemen Blog Post
+- Buat, ubah, hapus (soft delete), dan lihat daftar post
+- Role Admin: lihat semua (publish, draft, deleted)
+- Role Customer: hanya lihat post yang published & aktif
+
+### 3. Manajemen Kategori & Tag
+- Tambah, ubah, dan hapus kategori/tag (soft delete)
+- Endpoint admin dan publik dipisah
+- Validasi `slug` unik
+
+### 4. Relasi Post dan Tag (Pivot)
+- Mendukung input daftar tag saat membuat / mengedit post
+- Gunakan tabel `post_tag` sebagai pivot many-to-many
+
+### 5. Tracking Aktivitas Post (Customer)
+- Mencatat kunjungan berdasarkan IP, UserAgent, dan waktu
+- Endpoint `GET /post-activities/:post_id` untuk admin melihat statistik kunjungan
+
+### 6. Logging Aktivitas Admin
+- Setiap aksi Create, Update, Delete oleh admin otomatis dicatat ke `log_activities`
+- Termasuk info IP Address, UserAgent, URL yang diakses, dan status aksi
+
+---
+
+## 📦 Teknologi yang Digunakan
+
+- Node.js + Express.js
+- Sequelize ORM + SQLite (default) – mudah diganti ke PostgreSQL/MySQL
+- JWT untuk autentikasi
+- `express-validator` untuk validasi input
+- `slugify` untuk membuat slug otomatis
+- `ua-parser-js` untuk parsing User-Agent
+- Soft delete dengan fitur `paranoid` dari Sequelize
+
+---
+
+## 🔐 Role & Akses
+
+| Role      | Akses                                                                 |
+|-----------|------------------------------------------------------------------------|
+| Admin     | CRUD post, kategori, tag, akses semua post, melihat log & statistik   |
+| Customer  | Melihat post yang published, dikunjungi, dan dicatat sebagai aktivitas |
+
+---
+
+## 🔧 Instalasi & Menjalankan
+
+```bash
+# Clone repositori
+git clone https://github.com/rayhanzz772/blog_apps
+cd blog_apps
+
+# Install dependencies
+npm install
+
+# Jalankan server (dev)
+npm run dev
