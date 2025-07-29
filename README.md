@@ -36,7 +36,7 @@ Sebuah RESTful API untuk sistem manajemen blog yang mendukung fitur autentikasi,
 ## 📦 Teknologi yang Digunakan
 
 - Node.js + Express.js
-- Sequelize ORM + SQLite (default) – mudah diganti ke PostgreSQL/MySQL
+- Sequelize ORM + SQLite
 - JWT untuk autentikasi
 - `express-validator` untuk validasi input
 - `slugify` untuk membuat slug otomatis
