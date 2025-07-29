@@ -1,6 +1,6 @@
 # 📝 Blog Management RESTful API
 
-Sebuah RESTful API untuk sistem manajemen blog yang mendukung fitur autentikasi, CRUD post, kategori, tag, serta tracking aktivitas pengunjung dan logging admin secara lengkap.
+Sebuah RESTful API untuk sistem manajemen blog yang mendukung fitur autentikasi, CRUD post, kategori, tag, serta tracking aktivitas pengunjung dan logging admin.
 
 ## 🚀 Fitur Utama
 
@@ -66,3 +66,6 @@ npm install
 
 # Jalankan server (dev)
 npm run dev
+```
+---
+## Made With Love ❤
