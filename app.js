@@ -1,6 +1,8 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 const sequelize = require('./config/database');
 const db = require('./models');
 const { createDefault } = require('./services/server');
